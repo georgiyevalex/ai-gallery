@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "InterTight";
+    font-weight: 500;
+    font-style: normal;
+    src: url("@/assets/fonts/InterTight-Medium.ttf") format("truetype");
+}
+
+@theme {
+    --color-text-primary: rgba(255, 255, 255, 0.95);
+    --color-text-secondary: rgba(255, 255, 255, 0.6);
+    --color-inverted-primary: rgba(5, 5, 5, 0.95);
+    --color-primary: rgba(5, 5, 5, 1);
+    --color-secondary: rgba(19, 19, 19, 1);
+    --color-interactive-primary: rgba(255, 255, 255, 0.95);
+    --color-interactive-dark-gray: rgba(45, 45, 45, 0.8);
+    --color-interactive-secondary: rgba(255, 255, 255, 0.15);
+
+    --font-sans: 'InterTight';
+}
+
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 100vh;
+        background: var(--color-bg-primary);
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: var(--color-interactive-secondary);
+        border-radius: 100vh;
+    }
+}
