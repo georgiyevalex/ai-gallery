@@ -1,13 +1,13 @@
 <template>
   <NuxtLink
       :to="to"
-      class="flex items-center gap-1.5 p-1.5 transition"
+      class="flex items-center gap-1.5 py-1 transition"
       :class="isActive
       ? 'text-text-primary'
       : 'text-text-secondary hover:text-text-primary'"
   >
     <slot name="icon" />
-    <span class="text-sm">{{ label }}</span>
+    <span class="text-xs">{{ label }}</span>
   </NuxtLink>
 </template>
 

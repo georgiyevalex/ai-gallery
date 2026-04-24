@@ -10,9 +10,11 @@ import {
   IconHeartFilled,
   IconEye,
   IconHeart,
+  IconVideoFilled,
 } from "@tabler/icons-vue"
 
 const icons = {
+  IconVideoFilled,
   IconHeart,
   IconEye,
   IconHeartFilled,

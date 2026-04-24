@@ -1,7 +1,7 @@
 <template>
-  <aside class="w-64 h-full flex flex-col justify-between p-3">
+  <aside class="w-64 h-full flex flex-col justify-between p-3.5">
     <div>
-      <div class="pt-0 pb-1 p-1.5">
+      <div class="">
         <ui-button
             class="w-full justify-center bg-interactive-secondary text-text-primary hover:bg-interactive-primary hover:text-inverted-primary rounded-lg"
         >
@@ -12,11 +12,11 @@
         </ui-button>
       </div>
 
-      <div class="mx-1.5 my-2 bg-interactive-secondary h-px">
+      <div class="my-2.5 bg-white/5 h-px">
 
       </div>
 
-      <nav class="pt-2 flex flex-col gap-1">
+      <nav class="flex flex-col gap-1 pt-0.5">
         <sidebar-item label="Все генерации" to="/">
           <template #icon>
             <tabler-icon name="IconLayoutGrid" />

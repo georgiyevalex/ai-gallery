@@ -5,15 +5,15 @@
         <img src="/images/logo.svg" alt="logo" width="30">
       </div>
 
-      <div class="flex gap-2">
-        <ui-button class="bg-interactive-secondary text-text-primary hover:bg-interactive-primary hover:text-inverted-primary">
+      <div class="flex gap-3.5">
+        <ui-button class="bg-interactive-secondary text-text-primary hover:bg-interactive-primary hover:text-inverted-primary px-2.5">
           <template #left>
             <tabler-icon name="IconSparkles2Filled" />
           </template>
             Получить токены
         </ui-button>
 
-        <ui-button class="hover:bg-interactive-secondary hover:text-text-primary bg-interactive-primary text-inverted-primary">
+        <ui-button class="hover:bg-interactive-secondary hover:text-text-primary bg-interactive-primary text-inverted-primary px-2.5">
           Тарифы
         </ui-button>
 
