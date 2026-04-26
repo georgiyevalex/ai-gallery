@@ -8,7 +8,7 @@
           <template #left>
             <tabler-icon name="IconPlus" />
           </template>
-          Добавить
+          {{ $t("buttons.add") }}
         </ui-button>
       </div>
 
@@ -17,17 +17,17 @@
       </div>
 
       <nav class="flex flex-col gap-1 pt-0.5">
-        <sidebar-item label="Все генерации" to="/">
+        <sidebar-item :label="$t('menu.all')" to="/">
           <template #icon>
             <tabler-icon name="IconLayoutGrid" />
           </template>
         </sidebar-item>
-        <sidebar-item icon="IconPhoto" label="Изображения" to="/images" >
+        <sidebar-item icon="IconPhoto" :label="$t('menu.images')" to="/images/" >
           <template #icon>
             <tabler-icon name="IconPhoto" />
           </template>
         </sidebar-item>
-        <sidebar-item icon="IconVideo" label="Видео" to="/video" >
+        <sidebar-item icon="IconVideo" :label="$t('menu.video')" to="/video/" >
           <template #icon>
             <tabler-icon name="IconMovie" />
           </template>
@@ -36,9 +36,9 @@
     </div>
 
     <div>
-      <sidebar-item label="Мой профиль">
+      <sidebar-item :label="$t('menu.profile')">
         <template #icon>
-          <img src="/images/avatar-small.svg" alt="Profile" width="18">
+          <img src="/images/avatar-small.svg" :alt="$t('alts.avatar')" width="18">
         </template>
       </sidebar-item>
     </div>
@@ -46,5 +46,5 @@
   </aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 </script>

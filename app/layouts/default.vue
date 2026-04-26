@@ -6,7 +6,7 @@
       <div class="flex bg-secondary h-[calc(100vh-52px-4px)] rounded-sm">
         <app-menu />
         
-        <div class="w-full overflow-y-auto scrollbar">
+        <div ref="scrollContainer" class="w-full overflow-y-auto scrollbar">
           <slot></slot>
         </div>
       </div>
@@ -15,6 +15,9 @@
 </template>
 
 <script lang="ts" setup>
+  const scrollContainer = ref<HTMLElement | null>(null)
+  
+  provide<Ref<HTMLElement | null>>("scrollContainer", scrollContainer)
 </script>
 
 <style lang="scss" scoped>

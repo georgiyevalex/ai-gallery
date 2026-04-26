@@ -34,62 +34,45 @@ interface IPost {
   views_count: number
 }
 
-/* Можно ещё и так
-interface IPostsResponse {
-  items: IPost[]
-  total: number
-  page: number
-  size: number
-  pages: number
-}
-*/
-
 interface IPostsResponse extends IPagination {
   items: IPost[]
 }
 
 export const usePosts = (options?: IPostOptions) => {
-  const items = ref<IPost[]>([]);
-  const page = ref(1);
-  const totalPages = ref(1);
-  const loadMoreEnabled = ref(false);
-  const loading = ref(false);
-
+  const items = ref<IPost[]>([])
+  const page = ref(1)
+  const totalPages = ref(1)
+  const loading = ref(false)
 
   const fetchItems = async () => {
-    if (loading.value || page.value > totalPages.value) return;
-    loading.value = true;
+    if (loading.value || page.value > totalPages.value) return
+
+    loading.value = true
 
     try {
-      const response = await $fetch<IPostsResponse>('/api/v1/community/posts', {
-        query: {
-          page: page.value,
-          ...(options?.type && { type__in: options?.type })
+      const res = await $fetch<IPostsResponse>(
+        "/api/v1/community/posts",
+        {
+          query: {
+            page: page.value,
+            size: 100,
+            ...(options?.type && { type__in: options.type })
+          }
         }
-      });
+      )
 
-      items.value = [...items.value, ...response.items];
+      items.value = [...items.value, ...res.items]
 
-      loadMoreEnabled.value = response.pages > response.page;
-      totalPages.value = response.pages;
-      page.value++;
+      totalPages.value = res.pages
+      page.value++
+    } finally {
+      loading.value = false
     }
-    catch {}
-    finally {
-      loading.value = false;
-    }
-  }
-
-  const onIntersectionObserver = ([entry]: IntersectionObserverEntry[]) => {
-    if (!entry?.isIntersecting) return;
-    fetchItems();
   }
 
   return {
     items,
     loading,
-    loadMoreEnabled,
-    fetchItems,
-    onIntersectionObserver,
+    fetchItems
   }
 }

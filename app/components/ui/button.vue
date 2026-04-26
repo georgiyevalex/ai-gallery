@@ -1,30 +1,3 @@
-<script setup lang="ts">
-interface Props {
-  as?: 'button' | 'a' | 'NuxtLink'
-  to?: string
-  href?: string
-  type?: 'button' | 'submit' | 'reset'
-  disabled?: boolean
-  loading?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  as: 'button',
-  type: 'button',
-  disabled: false,
-  loading: false,
-})
-
-const emit = defineEmits<{
-  (e: 'click', event: MouseEvent): void
-}>()
-
-function handleClick(e: MouseEvent) {
-  if (props.disabled || props.loading) return
-  emit('click', e)
-}
-</script>
-
 <template>
   <component
       :is="as"
@@ -52,3 +25,30 @@ function handleClick(e: MouseEvent) {
     <slot />
   </component>
 </template>
+
+<script setup lang="ts">
+interface Props {
+  as?: 'button' | 'a' | 'NuxtLink'
+  to?: string
+  href?: string
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
+  loading?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  as: 'button',
+  type: 'button',
+  disabled: false,
+  loading: false,
+})
+
+const emit = defineEmits<{
+  (e: 'click', event: MouseEvent): void
+}>()
+
+function handleClick(e: MouseEvent) {
+  if (props.disabled || props.loading) return
+  emit('click', e)
+}
+</script>

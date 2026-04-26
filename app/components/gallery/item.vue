@@ -2,31 +2,25 @@
   <div
       ref="card"
       class="relative group overflow-hidden rounded-xs"
-      @mouseenter="onHoverStart"
-      @mouseleave="onHoverEnd"
+      :class="!isLoaded ? 'min-h-[300px]' : ''"
   >
-    <video
-        ref="videoRef"
-        v-if="item.preview_video && shouldRenderVideo"
-        :src="item.preview_video"
-        class="w-full h-full object-cover transition-opacity duration-200"
-        autoplay
-        muted
-        loop
-        playsinline
-        @canplay="onVideoReady"
-        :class="isHovered && isVideoLoaded || isVideoPaused ? 'opacity-100' : 'opacity-0 absolute inset-0'"
+    <div
+        v-if="!isLoaded"
+        class="absolute inset-0 animate-pulse bg-gradient-to-br from-interactive-secondary  via-interactive-dark-gray to-interactive-secondary"
     />
     
     <img
-        v-if="!isVideoPaused"
-        v-show="!isHovered || !isVideoLoaded"
         :src="item.preview"
-        class="w-full h-full object-cover"
+        :alt="$t('alts.generation', {u: item?.user?.display_name})"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover transition-all duration-500"
+        :class="isLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'"
+        @load="onLoad"
     />
     
     <div
-        v-if="item.preview_video"
+        v-if="item.preview_video && isLoaded"
         class="absolute inset-0 flex flex-col justify-between p-3
       opacity-100 group-hover:opacity-0"
     >
@@ -46,19 +40,20 @@
     >
       <div class="flex">
         <ui-button
-            class="bg-interactive-dark-gray backdrop-blur-2xl rounded-lg p-2 text-white hover:bg-secondary/70 transition"
+            class="bg-interactive-dark-gray backdrop-blur-2xl rounded-lg p-2 text-text-primary hover:bg-secondary/70 transition"
         >
           <tabler-icon name="IconHeart" />
         </ui-button>
       </div>
       
-      <div class="text-white">
+      <div class="text-text-primary">
         <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
         
         <div class="relative flex justify-between">
           <div class="flex gap-1 items-center">
             <img
                 :src="item?.user?.image ?? '/images/avatar-small.svg'"
+                :alt="$t('alts.avatar')"
                 width="20"
                 height="20"
                 class="rounded-full"
@@ -68,7 +63,7 @@
             </div>
           </div>
           
-          <div class="flex items-center gap-3 text-xs opacity-80 mt-1">
+          <div class="flex items-center gap-3 text-sm opacity-80 mt-1">
             <div class="flex items-center gap-1">
               <tabler-icon name="IconEye" class="w-4 h-4" />
               {{ item.views_count }}
@@ -85,49 +80,32 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { useElementHover } from '@vueuse/core'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 
-defineProps({
+const props = defineProps({
   item: {
     type: Object,
     default: () => ({})
   }
 })
 
-const card = useTemplateRef('card')
-const isHovered = useElementHover(card)
+const emit = defineEmits(['loaded'])
 
-const videoRef = ref<HTMLVideoElement | null>(null)
-const isVideoLoaded = ref(false)
-const isVideoPaused = ref(false)
-const shouldRenderVideo = ref(false)
+const card = ref()
+const isLoaded = ref(false)
 
-const onHoverStart = () => {
-  if (!shouldRenderVideo.value) {
-    shouldRenderVideo.value = true
-  }
+const onLoad = () => {
+  isLoaded.value = true
   
-  if (videoRef.value && isVideoLoaded.value) {
-    videoRef.value.play()
-  }
+  emit('loaded', card.value?.offsetHeight)
 }
 
-const onVideoReady = () => {
-  isVideoLoaded.value = true
+onMounted(() => {
+  const img = card.value?.querySelector('img')
   
-  if (videoRef.value) {
-    videoRef.value.play()
+  if (img?.complete) {
+    onLoad()
   }
-  
-  isVideoPaused.value = false
-}
-
-const onHoverEnd = () => {
-  if (videoRef.value) {
-    videoRef.value.pause()
-    isVideoPaused.value = true
-  }
-}
+})
 </script>

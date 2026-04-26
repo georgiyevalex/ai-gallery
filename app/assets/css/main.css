@@ -4,7 +4,10 @@
     font-family: "InterTight";
     font-weight: 500;
     font-style: normal;
-    src: url("@/assets/fonts/InterTight-Medium.ttf") format("truetype");
+    src:
+        url("@/assets/fonts/InterTight-Medium.woff2") format("woff2"),
+        url("@/assets/fonts/InterTight-Medium.ttf") format("truetype");
+    font-display: swap;
 }
 
 @theme {
@@ -17,7 +20,7 @@
     --color-interactive-dark-gray: rgba(45, 45, 45, 0.8);
     --color-interactive-secondary: rgba(255, 255, 255, 0.15);
 
-    --font-sans: 'InterTight';
+    --font-sans: 'InterTight', sans-serif;
 }
 
 @layer utilities {
